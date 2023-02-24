@@ -1,11 +1,20 @@
+import javax.swing.JFrame;
+
 public class Main {
     public static void main(String[] args) {
-        // TODO: Create a frame
+        final int FRAME_WIDTH = 700;
+        final int FRAME_HEIGHT = 600;
 
-        // TODO: Instantiate GamePlay
+        JFrame frame = new JFrame();
 
-        // TODO: Configure and display frame
+        GamePlay gamePlay = new GamePlay();
 
-        // TODO: Add gameplay instance to frame
+        frame.setBounds(10, 10, FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setTitle("Brick Breaker");
+        frame.setResizable(false);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        frame.add(gamePlay);
     }
 }
