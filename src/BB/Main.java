@@ -1,3 +1,5 @@
+package BB;
+
 import javax.swing.JFrame;
 
 public class Main {
@@ -14,7 +16,7 @@ public class Main {
         frame.setResizable(false);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         frame.add(gamePlay);
     }
 }
