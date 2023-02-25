@@ -12,34 +12,40 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private int score = 0;
     private int numberOfBricks = 21;
 
-    private final Timer TIMER;
-    private final int DELAY = 8;
+    private final Timer timer;
+    private final int delay = 8;
 
     private int playerX;
-    private final int PLAYER_DX = 20;    // number of pixels to move player
+    private final int playerY;
+    private final int playerW = 100;
+    private final int playerH = 8;
+    private final int playerDX = 20;    // number of pixels to move player
 
     private int ballX = 120;
     private int ballY = 350;
     private int ballDX = -1;
     private int ballDY = -2;
+    private final int ballW = 20;
+    private final int ballH = 20;
 
-    private final int FRAME_WIDTH;
-    private final int FRAME_HEIGHT;
+    private final int frameW;
+    private final int frameH;
 
     public GamePlay(int width, int height) {
-        this.FRAME_WIDTH = width;
-        this.FRAME_HEIGHT = height;
+        this.frameW = width;
+        this.frameH = height;
         this.playerX = width / 2;
+        this.playerY = height - 50;
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
-        TIMER = new Timer(DELAY, this);
-        TIMER.start();
+        timer = new Timer(delay, this);
+        timer.start();
     }
 
     public void paint(Graphics g) {
-        int width = this.FRAME_WIDTH - 8;
-        int height = this.FRAME_HEIGHT - 8;
+        int width = this.frameW - 8;
+        int height = this.frameH - 8;
         final int BORDER = 3;
 
         // Draw background
@@ -54,11 +60,11 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
         // Draw paddle
         g.setColor(Color.white);
-        g.fillRect(playerX, height - 50, 100, 8);
+        g.fillRect(playerX, playerY, playerW, playerH);
 
         // Draw ball
         g.setColor(Color.yellow);
-        g.fillOval(ballX, ballY, 20, 20);
+        g.fillOval(ballX, ballY, ballW, ballH);
 
         // Releases resources after this method is finished
         g.dispose();
@@ -66,7 +72,28 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        TIMER.start();
+        timer.start();
+
+        if (isPlaying) {
+            Rectangle ballHitBox = new Rectangle(ballX, ballY, ballW, ballH + ballH / 2);
+            Rectangle paddleHitBox = new Rectangle(playerX, playerY, playerW, playerH);
+
+            if (ballHitBox.intersects(paddleHitBox)) {
+                ballDY = -ballDY;
+            }
+
+            ballX += ballDX;
+            ballY += ballDY;
+
+            if (ballX < 0 || ballX > this.frameW - 13 - ballW) ballDX = -ballDX;
+            if (ballY < 0) ballDY = -ballDY;
+
+            if (ballY > this.frameH) {
+                isPlaying = false;
+                System.out.println("GAME OVER");
+            }
+        }
+
         repaint();
     }
 
@@ -78,10 +105,10 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     @Override
     public void keyPressed(KeyEvent e) {
         final int PLAYER_L_BOUND = 3;
-        final int PLAYER_R_BOUND = FRAME_WIDTH - 100;
+        final int PLAYER_R_BOUND = frameW - 100;
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if (playerX + PLAYER_DX > PLAYER_R_BOUND) {
+            if (playerX + playerDX > PLAYER_R_BOUND) {
                 playerX = PLAYER_R_BOUND;
             } else {
                 moveRight();
@@ -89,7 +116,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         }
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            if (playerX - PLAYER_DX < PLAYER_L_BOUND) {
+            if (playerX - playerDX < PLAYER_L_BOUND) {
                 playerX = PLAYER_L_BOUND;
             } else {
                 moveLeft();
@@ -99,11 +126,11 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     private void moveRight() {
         isPlaying = true;
-        playerX += PLAYER_DX;
+        playerX += playerDX;
     }
     private void moveLeft() {
         isPlaying = true;
-        playerX -= PLAYER_DX;
+        playerX -= playerDX;
     }
 
     @Override
