@@ -16,6 +16,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private int delay = 8;
 
     private int playerX = 310;
+    private final int PLAYER_DX = 20;    // number of pixels to move player
 
     private int ballX = 120;
     private int ballY = 350;
@@ -66,7 +67,33 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        final int PLAYER_L_BOUND = 10;
+        final int PLAYER_R_BOUND = 600;
 
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if (playerX > PLAYER_R_BOUND) {
+                playerX = PLAYER_R_BOUND;
+            }
+        } else {
+            moveRight();
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (playerX < PLAYER_L_BOUND) {
+                playerX = PLAYER_L_BOUND;
+            }
+        } else {
+            moveLeft();
+        }
+    }
+
+    private void moveRight() {
+        isPlaying = true;
+        playerX += PLAYER_DX;
+    }
+    private void moveLeft() {
+        isPlaying = true;
+        playerX -= PLAYER_DX;
     }
 
     @Override
