@@ -30,7 +30,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         timer.start();
     }
 
-    public void render(Graphics g) {
+    public void paint(Graphics g) {
         // Draw background
         g.setColor(Color.black);
         g.fillRect(1, 1, 692, 592);
@@ -48,11 +48,15 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         // Draw ball
         g.setColor(Color.yellow);
         g.fillOval(ballX, ballY, 20, 20);
+
+        // Releases resources after this method is finished
+        g.dispose();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        timer.start();
+        repaint();
     }
 
     @Override
