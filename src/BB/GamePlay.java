@@ -85,8 +85,12 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             ballX += ballDX;
             ballY += ballDY;
 
-            if (ballX < 0 || ballX > this.frameW - 13 - ballW) ballDX = -ballDX;
-            if (ballY < 0) ballDY = -ballDY;
+            if (ballX < 0 || ballX > this.frameW - 13 - ballW) {
+                ballDX = -ballDX;
+            }
+            if (ballY < 0) {
+                ballDY = -ballDY;
+            }
 
             if (ballY > this.frameH) {
                 isPlaying = false;
