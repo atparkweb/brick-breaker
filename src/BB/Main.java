@@ -4,8 +4,8 @@ import javax.swing.JFrame;
 
 public class Main {
     public static void main(String[] args) {
-        final int FRAME_WIDTH = 1000;
-        final int FRAME_HEIGHT = 800;
+        final int FRAME_WIDTH = 700;
+        final int FRAME_HEIGHT = 600;
 
         JFrame frame = new JFrame();
 
