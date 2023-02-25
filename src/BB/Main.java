@@ -4,14 +4,14 @@ import javax.swing.JFrame;
 
 public class Main {
     public static void main(String[] args) {
-        final int FRAME_WIDTH = 700;
-        final int FRAME_HEIGHT = 600;
-
         JFrame frame = new JFrame();
 
-        GamePlay gamePlay = new GamePlay(FRAME_WIDTH, FRAME_HEIGHT);
+        int width = 800;
+        int height = 600;
 
-        frame.setBounds(10, 10, FRAME_WIDTH, FRAME_HEIGHT);
+        GamePlay gamePlay = new GamePlay(width, height);
+
+        frame.setBounds(10, 10, width, height);
         frame.setTitle("Brick Breaker");
         frame.setResizable(false);
         frame.setVisible(true);
