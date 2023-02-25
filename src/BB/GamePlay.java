@@ -15,7 +15,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private Timer timer;
     private int delay = 8;
 
-    private int playerX = 310;
+    private int playerX;
     private final int PLAYER_DX = 20;    // number of pixels to move player
 
     private int ballX = 120;
@@ -23,7 +23,13 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private int ballDX = -1;
     private int ballDY = -2;
 
-    public GamePlay() {
+    private final int FRAME_WIDTH;
+    private final int FRAME_HEIGHT;
+
+    public GamePlay(int width, int height) {
+        this.FRAME_WIDTH = width;
+        this.FRAME_HEIGHT = height;
+        this.playerX = width / 2;
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -32,19 +38,23 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     }
 
     public void paint(Graphics g) {
+        int width = this.FRAME_WIDTH - 8;
+        int height = this.FRAME_HEIGHT - 8;
+        final int BORDER = 3;
+
         // Draw background
         g.setColor(Color.black);
-        g.fillRect(1, 1, 692, 592);
+        g.fillRect(1, 1, width, height);
 
         // Draw walls
         g.setColor(Color.white);
-        g.fillRect(0, 0, 3, 592);   // left wall
-        g.fillRect(0, 0, 692, 3);   // top wall
-        g.fillRect(679, 0, 3, 592); // right wall
+        g.fillRect(0, 0, BORDER, height);   // left wall
+        g.fillRect(0, 0, width, BORDER);   // top wall
+        g.fillRect(width - 13, 0, BORDER, height); // right wall
 
         // Draw paddle
         g.setColor(Color.white);
-        g.fillRect(playerX, 492, 100, 8);
+        g.fillRect(playerX, height - 50, 100, 8);
 
         // Draw ball
         g.setColor(Color.yellow);
@@ -68,7 +78,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     @Override
     public void keyPressed(KeyEvent e) {
         final int PLAYER_L_BOUND = 3;
-        final int PLAYER_R_BOUND = 592;
+        final int PLAYER_R_BOUND = FRAME_WIDTH - 100;
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             if (playerX + PLAYER_DX > PLAYER_R_BOUND) {
