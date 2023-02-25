@@ -67,11 +67,11 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        final int PLAYER_L_BOUND = 10;
-        final int PLAYER_R_BOUND = 600;
+        final int PLAYER_L_BOUND = 3;
+        final int PLAYER_R_BOUND = 592;
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if (playerX > PLAYER_R_BOUND) {
+            if (playerX + PLAYER_DX > PLAYER_R_BOUND) {
                 playerX = PLAYER_R_BOUND;
             } else {
                 moveRight();
@@ -79,7 +79,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         }
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            if (playerX < PLAYER_L_BOUND) {
+            if (playerX - PLAYER_DX < PLAYER_L_BOUND) {
                 playerX = PLAYER_L_BOUND;
             } else {
                 moveLeft();
