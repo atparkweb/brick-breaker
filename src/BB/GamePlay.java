@@ -12,8 +12,8 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private int score = 0;
     private int numberOfBricks = 21;
 
-    private Timer timer;
-    private int delay = 8;
+    private final Timer TIMER;
+    private final int DELAY = 8;
 
     private int playerX;
     private final int PLAYER_DX = 20;    // number of pixels to move player
@@ -33,8 +33,8 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
-        timer = new Timer(delay, this);
-        timer.start();
+        TIMER = new Timer(DELAY, this);
+        TIMER.start();
     }
 
     public void paint(Graphics g) {
@@ -66,7 +66,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        timer.start();
+        TIMER.start();
         repaint();
     }
 
