@@ -73,17 +73,17 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             if (playerX > PLAYER_R_BOUND) {
                 playerX = PLAYER_R_BOUND;
+            } else {
+                moveRight();
             }
-        } else {
-            moveRight();
         }
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             if (playerX < PLAYER_L_BOUND) {
                 playerX = PLAYER_L_BOUND;
+            } else {
+                moveLeft();
             }
-        } else {
-            moveLeft();
         }
     }
 
