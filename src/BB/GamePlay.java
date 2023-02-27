@@ -28,7 +28,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private final int ballW = 20;
     private final int ballH = 20;
 
-    private final MapGenerator map;
+    private final MapGenerator mapGenerator;
 
     private final int frameW;
     private final int frameH;
@@ -39,7 +39,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         this.playerX = width / 2;
         this.playerY = height - 100;
 
-        map = new MapGenerator(3, 7);
+        mapGenerator = new MapGenerator(3, 7);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -66,12 +66,12 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.white);
         g.fillRect(playerX, playerY, playerW, playerH);
 
+        // Draw bricks
+        mapGenerator.draw((Graphics2D)g);
+
         // Draw ball
         g.setColor(Color.yellow);
         g.fillOval(ballX, ballY, ballW, ballH);
-
-        // Draw bricks
-        map.draw((Graphics2D)g);
 
         // Releases resources after this method is finished
         g.dispose();
@@ -87,6 +87,24 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
             if (ballHitBox.intersects(paddleHitBox)) {
                 ballDY = -ballDY;
+            }
+
+            for (int i = 0; i < mapGenerator.map.length; i++) {
+                for (int j = 0; j < mapGenerator.map[0].length; j++) {
+                    if (mapGenerator.map[i][j] > 0) {
+                        int brickW = mapGenerator.brickWidth;
+                        int brickH = mapGenerator.brickHeight;
+                        int brickX = j * brickW + 80;
+                        int brickY = i * brickH + 50;
+
+                        Rectangle brickHitBox = new Rectangle(brickX, brickY, brickW, brickH);
+                        if (ballHitBox.intersects(brickHitBox)) {
+                            mapGenerator.setBrickValue(0, i, j);
+                            numberOfBricks--;
+                            score += 5;
+                        }
+                    }
+                }
             }
 
             ballX += ballDX;
