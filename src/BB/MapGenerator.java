@@ -24,13 +24,32 @@ public class MapGenerator {
             for (int j = 0; j < map[0].length; j++) {
                 if (map[i][j] > 0) {
                     graphics2D.setColor(Color.white);
-                    graphics2D.fillRect(j * brickWidth + 80, i * brickHeight + 50, brickWidth, brickHeight);
+                    int[] brickPos = getBrickPos(i, j);
+                    int brickX = brickPos[0];
+                    int brickY = brickPos[1];
+                    graphics2D.fillRect(brickX, brickY, brickWidth, brickHeight);
                     graphics2D.setStroke(new BasicStroke(3));
                     graphics2D.setColor(Color.black);
-                    graphics2D.drawRect(j * brickWidth + 80, i * brickHeight + 50, brickWidth, brickHeight);
+                    graphics2D.drawRect(brickX, brickY, brickWidth, brickHeight);
                 }
             }
         }
+    }
+
+    private int[] getBrickPos(int i, int j) {
+        int[] brickPos = new int[2];
+        brickPos[0] = j * brickWidth + 80;
+        brickPos[1] = i * brickHeight + 50;
+
+        return brickPos;
+    }
+
+    public Rectangle getBrickRect(int i, int j) {
+        int[] brickPos = getBrickPos(i, j);
+        int brickX = brickPos[0];
+        int brickY = brickPos[1];
+
+        return new Rectangle(brickX, brickY, brickWidth, brickHeight);
     }
 
     public void setBrickValue(int value, int row, int col) {

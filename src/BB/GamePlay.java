@@ -92,12 +92,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             for (int i = 0; i < mapGenerator.map.length; i++) {
                 for (int j = 0; j < mapGenerator.map[0].length; j++) {
                     if (mapGenerator.map[i][j] > 0) {
-                        int brickW = mapGenerator.brickWidth;
-                        int brickH = mapGenerator.brickHeight;
-                        int brickX = j * brickW + 80;
-                        int brickY = i * brickH + 50;
-
-                        Rectangle brickHitBox = new Rectangle(brickX, brickY, brickW, brickH);
+                        Rectangle brickHitBox = mapGenerator.getBrickRect(i, j);
                         if (ballHitBox.intersects(brickHitBox)) {
                             mapGenerator.setBrickValue(0, i, j);
                             numberOfBricks--;
