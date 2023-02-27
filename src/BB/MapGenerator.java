@@ -15,8 +15,8 @@ public class MapGenerator {
             }
         }
 
-        brickWidth = 540 / cols;
-        brickHeight = 150 / rows;
+        brickWidth = 540 / cols;    // TODO replace magic number with frame based value
+        brickHeight = 150 / rows;   // TODO replace magic number with frame based value
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -37,9 +37,13 @@ public class MapGenerator {
     }
 
     private int[] getBrickPos(int i, int j) {
+        final int sideMargin = 80;
+        final int topMargin = 50;
+
         int[] brickPos = new int[2];
-        brickPos[0] = j * brickWidth + 80;
-        brickPos[1] = i * brickHeight + 50;
+
+        brickPos[0] = j * brickWidth + sideMargin;
+        brickPos[1] = i * brickHeight + topMargin;
 
         return brickPos;
     }
