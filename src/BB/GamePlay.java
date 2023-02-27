@@ -102,6 +102,12 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
                             mapGenerator.setBrickValue(0, i, j);
                             numberOfBricks--;
                             score += 5;
+
+                            if (ballX + ballW - 1 <= brickHitBox.x || ballX + 1 >= brickHitBox.x + brickHitBox.width) {
+                                ballDX = -ballDX; // Reverse the ball direction
+                            } else {
+                                ballDY = -ballDY; // Reverse the ball direction
+                            }
                         }
                     }
                 }
