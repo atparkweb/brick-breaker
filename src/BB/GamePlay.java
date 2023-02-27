@@ -28,6 +28,8 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private final int ballW = 20;
     private final int ballH = 20;
 
+    private final MapGenerator map;
+
     private final int frameW;
     private final int frameH;
 
@@ -35,7 +37,9 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         this.frameW = width;
         this.frameH = height;
         this.playerX = width / 2;
-        this.playerY = height - 50;
+        this.playerY = height - 100;
+
+        map = new MapGenerator(3, 7);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -65,6 +69,9 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         // Draw ball
         g.setColor(Color.yellow);
         g.fillOval(ballX, ballY, ballW, ballH);
+
+        // Draw bricks
+        map.draw((Graphics2D)g);
 
         // Releases resources after this method is finished
         g.dispose();
