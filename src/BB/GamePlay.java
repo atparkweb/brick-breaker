@@ -23,12 +23,14 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     private int ballX = 120;
     private int ballY = 350;
-    private int ballDX = -1;
-    private int ballDY = -2;
+    private final int ballStartDX = -2;
+    private final int ballStartDY = -3;
+    private int ballDX = ballStartDX;
+    private int ballDY = ballStartDY;
     private final int ballW = 20;
     private final int ballH = 20;
 
-    private final MapGenerator mapGenerator;
+    private MapGenerator mapGenerator;
 
     private final int frameW;
     private final int frameH;
@@ -79,12 +81,29 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         g.setFont(new Font("serif", Font.BOLD, 25));
         g.drawString("" + score, 590, 30);
 
+        if (numberOfBricks <= 0) {
+            gameWin(g);
+        }
+
         if (ballY > 570) {
             gameOver(g);
         }
 
         // Releases resources after this method is finished
         g.dispose();
+    }
+
+    private void gameWin(Graphics g) {
+        isPlaying = false;
+        ballDX = 0;
+        ballDY = 0;
+
+        g.setColor(Color.green);
+        g.setFont(new Font("serif", Font.BOLD, 30));
+        g.drawString("YOU WON, Score: " + score, 190, 300);
+
+        g.setFont(new Font("serif", Font.BOLD, 20));
+        g.drawString("Press ENTER to restart", 230, 350);
     }
 
     private void gameOver(Graphics g) {
@@ -173,6 +192,21 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
                 playerX = PLAYER_L_BOUND;
             } else {
                 moveLeft();
+            }
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!isPlaying) {
+                isPlaying = true;
+                ballX = 120;
+                ballY = 350;
+                ballDX = ballStartDX;
+                ballDY = ballStartDY;
+                score = 0;
+                numberOfBricks = 21;
+                mapGenerator = new MapGenerator(3, 7);
+
+                repaint();
             }
         }
     }
